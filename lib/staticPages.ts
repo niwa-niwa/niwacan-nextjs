@@ -1,6 +1,5 @@
 import fetch from "node-fetch";
 
-// TODO: makes pages dir and [id].tsx
 // TODO: makes entity(type) of static page
 // TODO: assign types to each functions
 
@@ -14,9 +13,10 @@ export async function geAllStaticPages() {
 
 export async function getAllPageIds() {
   const response: any = await fetch(
-    `${process.env.NEXT_PUBLIC_RESTAPI_URL}${process.env.NEXT_PUBLIC_RESTAPI_WP_NAMESPACE}`
+    `${process.env.NEXT_PUBLIC_RESTAPI_URL}${process.env.NEXT_PUBLIC_RESTAPI_WP_NAMESPACE}pages/`
   );
   const pages: any = await response.json();
+
   return pages.map((post: any) => {
     return {
       params: {
@@ -26,9 +26,9 @@ export async function getAllPageIds() {
   });
 }
 
-export async function getPageData(id: string) {
+export async function getPageData(slug: string) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_RESTAPI_URL}${process.env.NEXT_PUBLIC_RESTAPI_WP_NAMESPACE}pages/${id}`
+    `${process.env.NEXT_PUBLIC_RESTAPI_URL}${process.env.NEXT_PUBLIC_RESTAPI_WP_NAMESPACE}pages/?slug=${slug}`
   );
   const page = await response.json();
   return page;
