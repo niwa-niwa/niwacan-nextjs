@@ -1,13 +1,12 @@
 import fetch from "node-fetch";
-
-// TODO: makes entity(type) of static page
-// TODO: assign types to each functions
+import { wpContent } from "./../types/wpContent";
+import { WpContent } from "../models/WpContent";
 
 export async function geAllStaticPages() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_RESTAPI_URL}${process.env.NEXT_PUBLIC_RESTAPI_WP_NAMESPACE}pages?_embed/`
   );
-  const pages = await response.json();
+  const pages: any = await response.json();
   return pages;
 }
 
@@ -16,11 +15,14 @@ export async function getAllPageIds() {
     `${process.env.NEXT_PUBLIC_RESTAPI_URL}${process.env.NEXT_PUBLIC_RESTAPI_WP_NAMESPACE}pages/`
   );
   const pages: any = await response.json();
+  const content_data: wpContent[] = pages.map((page: any) => {
+    return new WpContent(page);
+  });
 
-  return pages.map((post: any) => {
+  return content_data.map((data: wpContent) => {
     return {
       params: {
-        slug: String(post.slug),
+        slug: data.slug,
       },
     };
   });
@@ -28,8 +30,9 @@ export async function getAllPageIds() {
 
 export async function getPageData(slug: string) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_RESTAPI_URL}${process.env.NEXT_PUBLIC_RESTAPI_WP_NAMESPACE}pages/?slug=${slug}`
+    `${process.env.NEXT_PUBLIC_RESTAPI_URL}${process.env.NEXT_PUBLIC_RESTAPI_WP_NAMESPACE}pages/?slug=${slug}&_embed`
   );
-  const page = await response.json();
-  return page;
+  const page: any = await response.json();
+  const data: wpContent = new WpContent(page[0]);
+  return data;
 }

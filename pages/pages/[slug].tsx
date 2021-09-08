@@ -1,13 +1,14 @@
 import { getAllPageIds, getPageData } from "../../lib/staticPages";
+import { wpContent } from "../../types/wpContent";
 
-const StaticPage = (props: any) => {
-  return <h1>{props.page.title.rendered}</h1>;
+// TODO: implement layout
+const StaticPage = ({ data }: { data: wpContent }) => {
+  return <h1>{data.title}</h1>;
 };
 export default StaticPage;
 
 export async function getStaticPaths() {
-  const slugs = await getAllPageIds();
-
+  const slugs: any = await getAllPageIds();
   return {
     paths: slugs,
     fallback: true,
@@ -15,10 +16,10 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: any }) {
-  console.log("params= " + params.slug);
-  const page: any = await getPageData(params.slug);
+  const page: wpContent = await getPageData(params.slug);
+  const data = JSON.parse(JSON.stringify(page));
   return {
-    props: { page: page[0] },
+    props: { data },
     revalidate: 3,
   };
 }
