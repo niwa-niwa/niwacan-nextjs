@@ -9,15 +9,18 @@ export class WpContent implements wpContent {
   status = false;
   title = undefined;
   content = "";
-  thumbnail =
-    "https://www.gibier.or.jp/wp-content/themes/gibier.or.jp/images/noimage.gif";
+  thumbnail = {
+    src_url:
+      "https://www.gibier.or.jp/wp-content/themes/gibier.or.jp/images/noimage.gif",
+    width: 260,
+    height: 195,
+  };
 
   constructor(data: any) {
     this.setData(data);
   }
 
   setData(data: any) {
-    console.log("title=", data.title);
     this.id = data.id;
     this.title = data.title.rendered || "No Title";
     this.content = data.content.rendered;
@@ -27,10 +30,14 @@ export class WpContent implements wpContent {
     this.slug = data.slug;
     this.status = data.status === "publish" ? true : false;
     if (data["wp:featuredmedia"]) {
-      this.thumbnail =
+      this.thumbnail.src_url =
         data["wp:featuredmedia"][0]["media_details"]["sizes"]["full"][
           "source_url"
         ];
+      this.thumbnail.width =
+        data["wp:featuredmedia"][0]["media_details"]["sizes"]["full"]["width"];
+      this.thumbnail.height =
+        data["wp:featuredmedia"][0]["media_details"]["sizes"]["full"]["height"];
     }
   }
 }

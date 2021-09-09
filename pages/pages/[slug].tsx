@@ -2,7 +2,6 @@ import Image from "next/image";
 import { getAllPageIds, getPageData } from "../../lib/staticPages";
 import { wpContent } from "../../types/wpContent";
 
-// TODO: implement layout
 const StaticPage = ({ data }: { data: wpContent }) => {
   return (
     <>
@@ -13,9 +12,14 @@ const StaticPage = ({ data }: { data: wpContent }) => {
       <p>{data.type}</p>
       <p>{data.status}</p>
       <p>{data.title}</p>
-      <div>dangerouslySetInnerHTML={{ __html: data.content }}</div>
+      <div dangerouslySetInnerHTML={{ __html: data.content }} />
       <div>
-        <Image src={data.thumbnail} alt={data.title} height={350} width={350} />
+        <Image
+          src={data.thumbnail.src_url}
+          alt={data.title}
+          height={data.thumbnail.height}
+          width={data.thumbnail.width}
+        />
       </div>
     </>
   );

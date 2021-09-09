@@ -1,3 +1,9 @@
+type thumbnail = {
+  src_url: string;
+  width: number;
+  height: number;
+};
+
 export type wpContent = {
   id: string | null;
   created_at: string | null;
@@ -7,5 +13,5 @@ export type wpContent = {
   status: boolean;
   title: string | undefined;
   content: string;
-  thumbnail: string;
+  thumbnail: thumbnail;
 };
