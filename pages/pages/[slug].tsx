@@ -1,9 +1,24 @@
+import Image from "next/image";
 import { getAllPageIds, getPageData } from "../../lib/staticPages";
 import { wpContent } from "../../types/wpContent";
 
 // TODO: implement layout
 const StaticPage = ({ data }: { data: wpContent }) => {
-  return <h1>{data.title}</h1>;
+  return (
+    <>
+      <p>{data.id}</p>
+      <p>{data.created_at}</p>
+      <p>{data.updated_at}</p>
+      <p>{data.slug}</p>
+      <p>{data.type}</p>
+      <p>{data.status}</p>
+      <p>{data.title}</p>
+      <div>dangerouslySetInnerHTML={{ __html: data.content }}</div>
+      <div>
+        <Image src={data.thumbnail} alt={data.title} height={350} width={350} />
+      </div>
+    </>
+  );
 };
 export default StaticPage;
 

@@ -5,7 +5,7 @@ export type wpContent = {
   slug: string | null;
   type: string | null;
   status: boolean;
-  title: string | null;
-  content: string | null;
-  thumbnail: string | null;
+  title: string | undefined;
+  content: string;
+  thumbnail: string;
 };

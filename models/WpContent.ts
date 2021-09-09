@@ -7,8 +7,8 @@ export class WpContent implements wpContent {
   slug = null;
   type = null;
   status = false;
-  title = null;
-  content = null;
+  title = undefined;
+  content = "";
   thumbnail =
     "https://www.gibier.or.jp/wp-content/themes/gibier.or.jp/images/noimage.gif";
 
@@ -19,7 +19,7 @@ export class WpContent implements wpContent {
   setData(data: any) {
     console.log("title=", data.title);
     this.id = data.id;
-    this.title = data.title.rendered;
+    this.title = data.title.rendered || "No Title";
     this.content = data.content.rendered;
     this.type = data.type;
     this.created_at = data.date;
