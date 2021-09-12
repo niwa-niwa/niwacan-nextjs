@@ -1,8 +1,23 @@
 import Image from "next/image";
 import { getAllPostIds, getPostData } from "../../lib/posts";
 import { wpContent } from "../../types/wpContent";
+import { authParam } from "../../lib/authParam";
+import useSWR from "swr";
+import { useEffect } from "react";
+
+const fetcher = (url: string) =>
+  fetch(url, { headers: authParam }).then((res) => res.json());
 
 const Post = ({ data }: { data: wpContent }) => {
+  const { data: post, mutate } = useSWR(
+    `${process.env.NEXT_PUBLIC_RESTAPI_URL}${process.env.NEXT_PUBLIC_RESTAPI_WP_NAMESPACE}pages/?slug=${data.slug}&_embed`,
+    fetcher
+  );
+
+  useEffect(() => {
+    mutate();
+  }, [mutate]);
+
   return (
     <>
       <p>{data.id}</p>
@@ -37,7 +52,6 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }: { params: any }) {
   const post: wpContent = await getPostData(params.slug);
   const data = JSON.parse(JSON.stringify(post));
-  console.log(post);
   return {
     props: { data },
     revalidate: 3,
