@@ -1,11 +1,11 @@
 import { wpContent } from "../types/wpContent";
 
 export class WpContent implements wpContent {
-  id = null;
-  created_at = null;
-  updated_at = null;
-  slug = null;
-  type = null;
+  id = "";
+  created_at = "";
+  updated_at = "";
+  slug = "";
+  type = "";
   status = false;
   title = undefined;
   content = "";

@@ -5,12 +5,12 @@ type thumbnail = {
 };
 
 export type wpContent = {
-  id: string | null;
-  created_at: string | null;
-  updated_at: string | null;
-  slug: string | null;
-  type: string | null;
-  status: boolean;
+  id?: string;
+  created_at?: string;
+  updated_at?: string;
+  slug?: string;
+  type?: string;
+  status?: boolean;
   title: string | undefined;
   content: string;
   thumbnail: thumbnail;
